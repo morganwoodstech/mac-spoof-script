@@ -4,10 +4,25 @@
 # their return codes.
 import subprocess
 
-# Retrieves user input for network interface and mac_address in example format of eth0 / aa:bb:cc:dd:ee:ff
-# Contains python3 functions. For python2 compatibility change function to raw_input()
-interface = input("Enter network interface >  ")
-new_mac = input("Enter new MAC address > ")
+# Allows CLI options and option values from user input to parse and use within code
+import optparse
+
+# OptionParser. The constructor for an optparse. OptionParser has a number of keyword arguments that can be used to
+# define the program's options. Stored in the variable "parser"
+parser = optparse.OptionParser()
+
+# Defines option values
+parser.add_option("-i", "--interface", dest="interface", help="Define network interface. Example: eth0")
+parser.add_option("-m", "--mac", dest="new_mac", help="""Unicast MAC address. Must begin with an even number. 
+Syntax: aa:bb:cc:dd:ee:ff""")
+
+
+# Parse options and argument values from user input
+(options, arguments) = parser.parse_args()
+
+# Declares variables defined by arguments parsed above.
+interface = options.interface
+new_mac = options.new_mac
 
 # Prints conformation regarding user input
 print("[+] Changing MAC address for " + interface + " to " + new_mac)
