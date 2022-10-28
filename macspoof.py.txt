@@ -12,7 +12,9 @@ new_mac = input("Enter new MAC address > ")
 # Prints conformation regarding user input
 print("[+] Changing MAC address for " + interface + " to " + new_mac)
 
-# module.function(arg1, arg2) runs shell commands with previously defined parameters
-subprocess.call("ifconfig " + interface + " down", shell=True)
-subprocess.call("ifconfig " + interface + " hw ether " + new_mac, shell=True)
-subprocess.call("ifconfig " + interface + " up", shell=True)
+# module.function([arg1, arg2]) runs shell commands with previously defined parameters.
+# User input is sanitised by the elements included in list format because
+# user input is treated as an argument for the ifconfig command.
+subprocess.call(["ifconfig", interface, "down"])
+subprocess.call(["ifconfig", interface, "hw", "ether", new_mac])
+subprocess.call(["ifconfig", interface, "up"])
